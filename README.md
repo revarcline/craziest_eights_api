@@ -1,11 +1,13 @@
-# README
+# Crazy Eights API
+
+[frontend here](https://github.com/ZackAttax/craziest-eights-front-end)
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version - 3.0.2
 
 * System dependencies
 
