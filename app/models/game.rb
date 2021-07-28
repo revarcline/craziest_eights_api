@@ -5,11 +5,19 @@ class Game < ApplicationRecord
   attr_reader :stock, :discard
 
   def add_player(name, is_ai)
-    Player.create(name: name, game: self, is_ai: is_ai)
+    Player.create(name: name, game: self, is_ai: is_ai) if state == 'pending' && player_count < 8
+  end
+
+  def current_player
+    players[turn % player_count]
   end
 
   def player_count
-    players.length
+    players.count
+  end
+
+  def turn_id
+    current_player.id
   end
 
   def start_game
@@ -33,8 +41,7 @@ class Game < ApplicationRecord
   end
 
   def make_deck
-    number = 2 if players.length > 4
-    number |= 1
+    number = (player_count / 4) + 1
     Deck.create(game: self, number: number)
     @stock = piles.find_by(role: 'stock')
     @discard = piles.find_by(role: 'discard')
@@ -45,7 +52,7 @@ class Game < ApplicationRecord
     end
   end
 
-  def finish
+  def finish_game
     update(state: 'complete')
   end
 end

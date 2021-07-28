@@ -8,4 +8,9 @@ class GamesController < ApplicationController
     game = Game.find(params[:id])
     render json: game.to_json(only: [], methods: :player_count)
   end
+
+  def current_turn
+    game = Game.find(params[:id])
+    render json: game.to_json(only: [], methods: :turn_id)
+  end
 end
