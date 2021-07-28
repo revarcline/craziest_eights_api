@@ -15,6 +15,10 @@ class Pile < ApplicationRecord
     ordered_cards.first
   end
 
+  def bottom_card
+    ordered_cards.last
+  end
+
   def move(card, new_pile)
     card.update(pile: new_pile)
   end

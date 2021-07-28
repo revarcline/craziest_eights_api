@@ -3,14 +3,21 @@ class Deck < ApplicationRecord
   has_many :cards, dependent: :destroy
   has_many :piles, dependent: :destroy
 
-  after_create :build_cards
+  after_create :build_deck
 
   private
 
-  def build_cards
+  def build_deck
+    stock = Pile.create(deck: self, role: 'stock')
+    discard = Pile.create(deck: self, role: 'discard')
+    build_cards(stock)
+    stock.shuffle
+    stock.move(stock.top_card, discard)
+  end
+
+  def build_cards(stock)
     suits = %w[S D C H]
     ranks = ('2'..'10').to_a + %w[J Q K A]
-    stock = Pile.create(deck: self, role: 'stock')
     number.times do
       suits.each do |suit|
         ranks.each do |rank|
@@ -18,6 +25,5 @@ class Deck < ApplicationRecord
         end
       end
     end
-    stock.shuffle
   end
 end
