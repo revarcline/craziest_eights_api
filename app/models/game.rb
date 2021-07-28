@@ -12,4 +12,21 @@ class Game < ApplicationRecord
     Deck.create(game: self, number: number)
     update(state: 'active')
   end
+
+  def stock
+    piles.find_by(role: 'stock')
+  end
+
+  def discard
+    piles.find_by(role: 'discard')
+  end
+
+  def discard_to_stock
+    discard.shuffle_move(stock)
+    stock.top_card.move(discard)
+  end
+
+  private
+
+  def ai_move; end
 end
