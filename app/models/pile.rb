@@ -1,2 +1,0 @@
-class Pile < ApplicationRecord
-end
