@@ -5,7 +5,7 @@ class Game < ApplicationRecord
   attr_reader :stock, :discard
 
   def add_player(name, is_ai)
-    Player.create(name: name, game: self, is_ai: is_ai) if state == 'pending' && player_count < 8
+    Player.create(name: name, game: self, is_ai: is_ai)
   end
 
   def current_player
