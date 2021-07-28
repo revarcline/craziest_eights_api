@@ -4,7 +4,7 @@ class CreateCards < ActiveRecord::Migration[6.1]
       t.string :rank
       t.string :suit
       t.references :deck, null: false, foreign_key: true
-      t.references :pile, null: false, foreign_key: true
+      t.references :pile, foreign_key: true
 
       t.timestamps
     end

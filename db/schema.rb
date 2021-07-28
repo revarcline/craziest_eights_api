@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2021_07_28_003544) do
     t.string "rank"
     t.string "suit"
     t.bigint "deck_id", null: false
-    t.bigint "pile_id", null: false
+    t.bigint "pile_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["deck_id"], name: "index_cards_on_deck_id"
@@ -43,10 +43,9 @@ ActiveRecord::Schema.define(version: 2021_07_28_003544) do
   end
 
   create_table "piles", force: :cascade do |t|
-    t.integer "order"
     t.string "role"
     t.bigint "deck_id", null: false
-    t.bigint "player_id", null: false
+    t.bigint "player_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["deck_id"], name: "index_piles_on_deck_id"

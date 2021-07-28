@@ -31,3 +31,6 @@
 
 # developer secrets
 .envrc
+
+# stupid scratch file for repl things
+scratch.rb
