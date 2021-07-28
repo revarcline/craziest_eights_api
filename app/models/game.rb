@@ -4,6 +4,8 @@ class Game < ApplicationRecord
   has_many :piles, through: :deck
   attr_reader :stock, :discard
 
+  accepts_nested_attributes_for :players
+
   def add_player(name, is_ai)
     Player.create(name: name, game: self, is_ai: is_ai)
   end

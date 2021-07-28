@@ -20,6 +20,10 @@ class Player < ApplicationRecord
     pile.move(game.stock.top_card, pile)
   end
 
+  def hand_size
+    cards.count
+  end
+
   private
 
   def can_only_join_pending
