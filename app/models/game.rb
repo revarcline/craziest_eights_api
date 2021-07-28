@@ -20,6 +20,10 @@ class Game < ApplicationRecord
     current_player.id
   end
 
+  def open_card
+    discard.bottom_card
+  end
+
   def start_game
     make_deck
     deal

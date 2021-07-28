@@ -4,7 +4,9 @@ class Player < ApplicationRecord
   has_many :cards, through: :pile
   validate :can_only_join_pending, :max_eight_per_game
 
-  def ai_move; end
+  def ai_move
+    # ai brain
+  end
 
   def play_card(card)
     pile.move(card, game.discard) if valid_move?(card)
