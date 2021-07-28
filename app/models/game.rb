@@ -35,4 +35,10 @@ class Game < ApplicationRecord
     @stock = piles.find_by(role: 'stock')
     @discard = piles.find_by(role: 'discard')
   end
+
+  def play_game
+    while state == 'active'
+
+    end
+  end
 end
