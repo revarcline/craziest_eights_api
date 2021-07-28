@@ -8,6 +8,10 @@ class Game < ApplicationRecord
     Player.create(name: name, game: self, is_ai: is_ai)
   end
 
+  def player_count
+    players.length
+  end
+
   def start_game
     make_deck
     deal
@@ -38,7 +42,10 @@ class Game < ApplicationRecord
 
   def play_game
     while state == 'active'
-
     end
+  end
+
+  def finish
+    update(state: 'complete')
   end
 end
