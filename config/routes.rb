@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root to: 'page#index'
   get '/games', to: 'games#index'
   get '/games/:id', to: 'games#show'
+  get '/games/:id/start', to: 'games#start'
   get '/games/:id/player_count', to: 'games#player_count'
   get '/games/:id/current_turn', to: 'games#current_turn'
   post '/games/:id/new_player', to: 'games#new_player'

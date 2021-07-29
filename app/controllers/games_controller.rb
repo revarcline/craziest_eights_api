@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
   def index
     games = Game.where(state: 'pending')
-    render json: games.to_json(methods: :player_count)
+    render json: games.to_json(methods: :player_count, except: %i[turn winner])
   end
 
   def show
@@ -13,10 +13,6 @@ class GamesController < ApplicationController
       opts[:include][:players][:methods] = :hand_size
     end
     render json: game.to_json(opts)
-  end
-
-  def player_count
-    render json: params_game.to_json(only: [], methods: :player_count)
   end
 
   private
