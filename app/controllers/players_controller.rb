@@ -1,16 +1,29 @@
 class PlayersController < ApplicationController
   def show
-    player_info
+    render json: player_info
+  end
+
+  def play
+    player = player_from_id
+    card = Card.find(params[:card])
+    player.play_card(card)
+    render json: player_info
+  end
+
+  def draw
+    player = player_from_id
+    player.draw_from_stock
+    render json: player_info
   end
 
   private
 
-  def params_player
+  def player_from_id
     Player.find(params[:id])
   end
 
   def player_info
-    player = params_player
+    player = player_from_id
     opts = {}
     case player.game.state
     when 'active'
@@ -18,6 +31,6 @@ class PlayersController < ApplicationController
     when 'complete'
       opts[:methods] = :won?
     end
-    render json: player.to_json(opts)
+    player.to_json(opts)
   end
 end
