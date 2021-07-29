@@ -31,6 +31,7 @@ class Player < ApplicationRecord
   def draw_from_stock
     new_card = game.stock.top_card
     pile.move(new_card, pile)
+    game.discard_to_stock if game.stock.cards.empty?
     new_card
   end
 

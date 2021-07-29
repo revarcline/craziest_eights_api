@@ -41,7 +41,7 @@ class Game < ApplicationRecord
 
   def discard_to_stock
     discard.shuffle_move(stock)
-    stock.top_card.move(discard)
+    stock.move(stock.top_card, discard)
   end
 
   def check_turn
@@ -73,5 +73,6 @@ class Game < ApplicationRecord
 
   def finish_game
     update(state: 'complete')
+    deck.destroy
   end
 end
