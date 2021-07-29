@@ -5,4 +5,9 @@ Rails.application.routes.draw do
   get '/games/:id', to: 'games#show'
   get '/games/:id/player_count', to: 'games#player_count'
   get '/games/:id/current_turn', to: 'games#current_turn'
+  post '/games/:id/new_player', to: 'games#new_player'
+  delete '/games/:id', to: 'games#destroy'
+  get '/players/:id', to: 'players#show'
+  post '/players/:id/draw', to: 'players#draw'
+  post '/players/:id/play', to: 'players#play'
 end

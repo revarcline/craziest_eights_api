@@ -17,7 +17,7 @@ class GamesController < ApplicationController
   end
 
   def current_turn
-    render json: params_game.to_json(only: [], methods: :turn_id)
+    render json: params_game.to_json(only: [], methods: :turn_player_id)
   end
 
   private

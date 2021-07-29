@@ -2,7 +2,6 @@ class Game < ApplicationRecord
   has_many :players, dependent: :destroy
   has_one :deck, dependent: :destroy
   has_many :piles, through: :deck
-  attr_reader :stock, :discard
 
   accepts_nested_attributes_for :players
 
@@ -14,11 +13,19 @@ class Game < ApplicationRecord
     players[turn % player_count]
   end
 
+  def stock
+    piles.find_by(role: 'stock')
+  end
+
+  def discard
+    piles.find_by(role: 'discard')
+  end
+
   def player_count
     players.count
   end
 
-  def turn_id
+  def turn_player_id
     current_player.id
   end
 
@@ -37,6 +44,15 @@ class Game < ApplicationRecord
     stock.top_card.move(discard)
   end
 
+  def check_turn
+    if current_player.won?
+      finish_game
+    else
+      increment_turn
+      current_player.ai_move if current_player.is_ai?
+    end
+  end
+
   private
 
   def deal
@@ -46,16 +62,13 @@ class Game < ApplicationRecord
     5.times { players.each(&:draw_from_stock) }
   end
 
+  def increment_turn
+    update(turn: turn + 1)
+  end
+
   def make_deck
     number = (player_count / 4) + 1
     Deck.create(game: self, number: number)
-    @stock = piles.find_by(role: 'stock')
-    @discard = piles.find_by(role: 'discard')
-  end
-
-  def play_game
-    while state == 'active'
-    end
   end
 
   def finish_game
