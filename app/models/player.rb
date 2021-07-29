@@ -44,7 +44,8 @@ class Player < ApplicationRecord
   end
 
   def won?
-    hand_size.zero?
+    # return game winner id if exists or false (based on hand size)
+    game.winner || hand_size.zero
   end
 
   private

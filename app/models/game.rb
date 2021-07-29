@@ -46,6 +46,7 @@ class Game < ApplicationRecord
 
   def check_turn
     if current_player.won?
+      update(winner: current_player.id)
       finish_game
     else
       increment_turn
