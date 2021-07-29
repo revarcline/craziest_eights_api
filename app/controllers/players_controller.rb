@@ -16,7 +16,7 @@ class PlayersController < ApplicationController
     when 'active'
       opts[:methods] = :hand
     when 'complete'
-      opts[:methods] = won?
+      opts[:methods] = :won?
     end
     render json: player.to_json(opts)
   end
