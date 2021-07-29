@@ -8,16 +8,15 @@ class GamesController < ApplicationController
     game = params_game
 
     opts = { include: { players: { only: %i[name id is_ai] } } }
-    opts[:include][:players][:methods] = :hand_size if game.state == 'active'
+    if game.state == 'active'
+      opts[:methods] = %i[turn_player_id open_card]
+      opts[:include][:players][:methods] = :hand_size
+    end
     render json: game.to_json(opts)
   end
 
   def player_count
     render json: params_game.to_json(only: [], methods: :player_count)
-  end
-
-  def current_turn
-    render json: params_game.to_json(only: [], methods: :turn_player_id)
   end
 
   private

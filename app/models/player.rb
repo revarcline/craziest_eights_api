@@ -18,7 +18,9 @@ class Player < ApplicationRecord
   end
 
   def play_card(card)
-    pile.move(card, game.discard) if valid_move?(card)
+    return unless valid_move?(card)
+
+    pile.move(card, game.discard)
     game.check_turn
   end
 
@@ -34,6 +36,10 @@ class Player < ApplicationRecord
 
   def hand_size
     cards.count
+  end
+
+  def hand
+    pile.ordered_cards
   end
 
   def won?
