@@ -8,17 +8,32 @@ class GamesController < ApplicationController
     render json: game_info
   end
 
+  def create
+    game = Game.create(name: params[:game][:name])
+    if game.id_in_database && game.add_player(params[:player][:name], params[:player][:is_ai])
+      render json: game.to_json(include: :players)
+    else
+      render json: { error: 'could not create game' }
+    end
+  end
+
   def start
     game = game_from_id
-    game.start
-    render json: game_info
+    if game.start_game
+      render json: game_info
+    else
+      render json: { error: 'cannot start game' }
+    end
   end
 
   def new_player
     # this might be tricky? we'll have to see
     game = game_from_id
-    game.add_player(params[:player][:name], params[:player][:is_ai])
-    render json: game_info
+    if game.add_player(params[:player][:name], params[:player][:is_ai])
+      render json: game_info
+    else
+      render json: { error: 'could not create new player' }
+    end
   end
 
   def finish
@@ -28,8 +43,12 @@ class GamesController < ApplicationController
   end
 
   def destroy
-    Game.destroy(params[:id])
-    render json: { message: "game #{params[:id]} deleted." }
+    if game_from_id
+      Game.destroy(params[:id])
+      render json: { message: "game #{params[:id]} deleted" }
+    else
+      render json: { error: "no game with id #{params[:id]}" }
+    end
   end
 
   private

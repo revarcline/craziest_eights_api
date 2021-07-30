@@ -34,6 +34,8 @@ class Game < ApplicationRecord
   end
 
   def start_game
+    return false unless state == 'pending' && player_count >= 2
+
     make_deck
     deal
     update(state: 'active', turn: 0)
@@ -54,6 +56,11 @@ class Game < ApplicationRecord
     end
   end
 
+  def finish_game
+    update(state: 'complete')
+    deck.destroy
+  end
+
   private
 
   def deal
@@ -70,10 +77,5 @@ class Game < ApplicationRecord
   def make_deck
     number = (player_count / 4) + 1
     Deck.create(game: self, number: number)
-  end
-
-  def finish_game
-    update(state: 'complete')
-    deck.destroy
   end
 end
