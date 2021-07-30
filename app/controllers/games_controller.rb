@@ -9,9 +9,9 @@ class GamesController < ApplicationController
   end
 
   def create
-    game = Game.create(name: params[:game][:name])
-    if game.id_in_database && game.add_player(params[:player][:name], params[:player][:is_ai])
-      render json: game.to_json(include: :players)
+    game = Game.new(name: params[:game][:name])
+    if game.save && game.add_player(params[:player][:name], params[:player][:is_ai])
+      render json: game.to_json(include: { players: { only: %i[name id is_ai] } })
     else
       render json: { error: 'could not create game' }
     end
