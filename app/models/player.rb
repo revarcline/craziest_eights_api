@@ -26,7 +26,7 @@ class Player < ApplicationRecord
   end
 
   def valid_move?(card)
-    card.matches?(game.open_card)
+    card.matches?(game.open_card) && card.in?(hand)
   end
 
   def draw_from_stock
