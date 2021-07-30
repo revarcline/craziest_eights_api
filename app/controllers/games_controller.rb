@@ -38,8 +38,11 @@ class GamesController < ApplicationController
 
   def finish
     game = game_from_id
-    game.finish
-    render json: game_info
+    if game.finish
+      render json: game_info
+    else
+      render json: { error: 'cannot finish game' }
+    end
   end
 
   def destroy

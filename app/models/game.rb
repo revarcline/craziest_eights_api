@@ -57,8 +57,12 @@ class Game < ApplicationRecord
   end
 
   def finish_game
-    update(state: 'complete')
+    return unless state == 'active'
+
+    return unless update(state: 'complete')
+
     deck.destroy
+    true
   end
 
   private
