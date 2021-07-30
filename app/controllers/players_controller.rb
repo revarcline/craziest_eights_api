@@ -25,12 +25,14 @@ class PlayersController < ApplicationController
   def player_info
     player = player_from_id
     opts = {}
+
     case player.game.state
     when 'active'
       opts[:methods] = :hand
     when 'complete'
       opts[:methods] = :won?
     end
+
     player.to_json(opts)
   end
 end
