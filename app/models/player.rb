@@ -25,10 +25,6 @@ class Player < ApplicationRecord
     true
   end
 
-  def valid_move?(card)
-    card.matches?(game.open_card) && card.in?(hand)
-  end
-
   def draw_from_stock
     new_card = game.stock.top_card
     pile.move(new_card, pile)
@@ -50,6 +46,10 @@ class Player < ApplicationRecord
   end
 
   private
+
+  def valid_move?(card)
+    card.matches?(game.open_card) && card.in?(hand)
+  end
 
   def can_only_join_pending
     errors.add(:game, 'can only join a pending game') unless game.state == 'pending'
