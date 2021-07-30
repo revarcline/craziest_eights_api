@@ -18,10 +18,11 @@ class Player < ApplicationRecord
   end
 
   def play_card(card)
-    return unless valid_move?(card)
+    return false unless valid_move?(card)
 
     pile.move(card, game.discard)
     game.check_turn
+    true
   end
 
   def valid_move?(card)

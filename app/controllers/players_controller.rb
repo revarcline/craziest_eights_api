@@ -6,14 +6,20 @@ class PlayersController < ApplicationController
   def play
     player = player_from_id
     card = Card.find(params[:card])
-    player.play_card(card)
-    render json: player_info
+    if player.play_card(card)
+      render json: player_info
+    else
+      render json: { error: 'must make a valid move' }
+    end
   end
 
   def draw
     player = player_from_id
-    player.draw_from_stock
-    render json: player_info
+    if player.draw_from_stock.instance_of?(Card)
+      render json: player_info
+    else
+      render json: { error: 'could not draw card' }
+    end
   end
 
   private
