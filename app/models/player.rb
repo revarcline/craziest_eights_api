@@ -1,4 +1,5 @@
 class Player < ApplicationRecord
+  has_secure_token :auth_token
   belongs_to :game
   has_one :pile
   has_many :cards, through: :pile
