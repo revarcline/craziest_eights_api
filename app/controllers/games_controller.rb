@@ -2,7 +2,7 @@ class GamesController < ApplicationController
   before_action :check_authorization, except: %i[index create new_player]
 
   def index
-    games = Game.where(state: 'pending')
+    @games = Game.where(state: 'pending')
     render json: games.to_json(methods: :player_count, except: %i[turn winner])
   end
 
