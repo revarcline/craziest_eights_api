@@ -23,7 +23,7 @@ class GamesController < ApplicationController
   def start
     game = game_from_id
     if game.start_game
-      render json: game_info
+      render 'show'
     else
       render json: { error: 'cannot start game' }
     end
@@ -31,13 +31,10 @@ class GamesController < ApplicationController
 
   def new_player
     # this might be tricky? we'll have to see
-    game = game_from_id
-    player = game.add_player(params[:player][:name], params[:player][:is_ai])
-    if player
-      out = { game: game_info }
-      player = Player.find(player_id)
-      out.player = player.to_json unless player.is_ai
-      render json: out
+    @game = game_from_id
+    @player = game.add_player(params[:player][:name], params[:player][:is_ai])
+    if @player
+      render 'new_player'
     else
       render json: { error: 'could not create new player' }
     end
@@ -82,6 +79,6 @@ class GamesController < ApplicationController
   def check_authorization
     game = game_from_id
     player = Player.find(params[:player_id])
-    player.in?(game.players) && player.valid_token?(request.headers['Authorization'])
+    player.in?(game.players) && player.valid_token?(params[:auth_token])
   end
 end
