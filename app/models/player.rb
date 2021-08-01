@@ -11,8 +11,9 @@ class Player < ApplicationRecord
   end
 
   def ai_move
-    # latency for realism
-    sleep(2.5)
+    # uncomment to add latency for realism if using with a frontend
+    # sleep(2.5)
+
     # check game.open_card against hand for valid_move?
     # if no matches, draw, then check drawn card for valid_move?
     move = cards.find { |card| valid_move?(card) }
@@ -51,10 +52,14 @@ class Player < ApplicationRecord
     game.winner || hand_size.zero?
   end
 
+  def my_turn?
+    game.turn_player_id == id
+  end
+
   private
 
   def valid_move?(card)
-    card.matches?(game.open_card) && card.in?(hand)
+    card.matches?(game.open_card) && card.in?(hand) && my_turn?
   end
 
   def can_only_join_pending

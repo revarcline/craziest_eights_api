@@ -1,0 +1,30 @@
+json = {}
+
+json[:game] = {
+  id: @game.id,
+  name: @game.name,
+  status: @game.status,
+  created_at: @game.created_at,
+  updated_at: @game.updated_at
+}
+
+json[:game][:players] = @games.players.map do |player|
+  {
+    id: player.id,
+    name: player.name,
+    is_ai: player.is_ai,
+    hand_size: player.hand_size
+  }
+end
+
+json[:player] = {
+  id: @player.id,
+  name: @player.name,
+  is_ai: @player.is_ai,
+  created_at: @player.created_at,
+  updated_at: @player.updated_at
+}
+
+json[:player][:auth_token] = @player.auth_token unless @player.is_ai
+
+json

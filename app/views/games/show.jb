@@ -6,12 +6,22 @@ json = {
   updated_at: @game.updated_at
 }
 
-json[:players] = @games.player.map do |player|
+json[:players] = @games.players.map do |player|
   {
     id: player.id,
     name: player.name,
+    is_ai: player.is_ai,
     hand_size: player.hand_size
   }
+end
+
+case @game.status
+when 'active'
+  json[:open_card] = @game.open_card
+  json[:stock_count] = @game.stock.count
+  json[:discard_count] = @game.discard.count
+when 'complete'
+  json[:winner] = @game.winner
 end
 
 json

@@ -1,0 +1,18 @@
+json = {
+  id: @player.id,
+  name: @player.name,
+  my_turn: @player.my_turn?,
+  won: @player.won?,
+  created_at: @player.created_at,
+  updated_at: @player.updated_at
+}
+
+json[:hand] = @player.hand do |card|
+  {
+    id: card.id,
+    suit: card.suit,
+    rank: card.rank
+  }
+end
+
+json
