@@ -6,7 +6,8 @@ class Game < ApplicationRecord
   accepts_nested_attributes_for :players
 
   def add_player(name, is_ai)
-    Player.create(name: name, game: self, is_ai: is_ai)
+    Player.new(name: name, game: self, is_ai: is_ai)
+    player if player.save
   end
 
   def current_player
