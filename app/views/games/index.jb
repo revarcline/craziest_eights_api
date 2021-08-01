@@ -1,9 +1,11 @@
-json = {
-  id: @game.id,
-  name: @game.name,
-  player_count: @game.player_count,
-  created_at: @game.created_at,
-  updated_at: @game.updated_at
-}
+json = @games.each do |game|
+  {
+    id: game.id,
+    name: game.name,
+    player_count: game.player_count,
+    created_at: game.created_at,
+    updated_at: game.updated_at
+  }
+end
 
 json
