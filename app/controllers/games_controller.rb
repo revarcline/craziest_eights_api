@@ -3,7 +3,7 @@ class GamesController < ApplicationController
 
   def index
     @games = Game.where(state: 'pending')
-    render json: games.to_json(methods: :player_count, except: %i[turn winner])
+    render 'index'
   end
 
   def show
@@ -11,13 +11,10 @@ class GamesController < ApplicationController
   end
 
   def create
-    game = Game.new(name: params[:game][:name])
+    @game = Game.new(name: params[:game][:name])
     if game.save
-      player = game.add_player(params[:player][:name], params[:player][:is_ai])
-      game_json = game.to_json(include: { players: { only: %i[name id is_ai] } })
-      player_json = player.to_json
-      obj = { player: player_json, game: game_json }
-      render json: obj.to_json
+      @player = game.add_player(params[:player][:name], params[:player][:is_ai])
+      render 'new_player'
     else
       render json: { error: 'could not create game' }
     end

@@ -2,6 +2,7 @@ class Game < ApplicationRecord
   has_many :players, dependent: :destroy
   has_one :deck, dependent: :destroy
   has_many :piles, through: :deck
+  validates :name, presence: true
 
   accepts_nested_attributes_for :players
 

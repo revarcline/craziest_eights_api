@@ -3,6 +3,7 @@ class Player < ApplicationRecord
   belongs_to :game
   has_one :pile
   has_many :cards, through: :pile
+  validates :name, presence: true
   validate :can_only_join_pending, :max_eight_per_game
 
   def valid_token?(check_token)
