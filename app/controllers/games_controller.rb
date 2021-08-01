@@ -1,4 +1,6 @@
 class GamesController < ApplicationController
+  before_action :check_authorization, except: %i[index create new_player]
+
   def index
     games = Game.where(state: 'pending')
     render json: games.to_json(methods: :player_count, except: %i[turn winner])
@@ -31,8 +33,9 @@ class GamesController < ApplicationController
     game = game_from_id
     player_id = game.add_player(params[:player][:name], params[:player][:is_ai])
     if player_id
+      out = { game: game_info }
       player = Player.find(player_id)
-      out = { game: game_info, player: player.to_json }
+      out.player = player.to_json unless player.is_ai
       render json: out
     else
       render json: { error: 'could not create new player' }
@@ -50,7 +53,7 @@ class GamesController < ApplicationController
 
   def destroy
     if game_from_id
-      Game.destroy(params[:id])
+      Game.destroy(params[:game_id])
       render json: { message: "game #{params[:id]} deleted" }
     else
       render json: { error: "no game with id #{params[:id]}" }
@@ -60,7 +63,7 @@ class GamesController < ApplicationController
   private
 
   def game_from_id
-    Game.find(params[:id])
+    Game.find(params[:game_id])
   end
 
   def game_info
@@ -73,5 +76,11 @@ class GamesController < ApplicationController
     end
 
     game.to_json(opts)
+  end
+
+  def check_authorization
+    game = Game.find(params[:game_id])
+    player = Player.find(params[:player])
+    player.in?(game.players) && player.valid_token?(request.headers['Authorization'])
   end
 end
