@@ -1,4 +1,6 @@
 class PlayersController < ApplicationController
+  before_action :check_authorization
+
   def show
     render json: player_info
   end
@@ -40,5 +42,10 @@ class PlayersController < ApplicationController
     end
 
     player.to_json(opts)
+  end
+
+  def check_authorization
+    player = player_from_id
+    player.valid_token?(request.headers['Authorization'])
   end
 end
