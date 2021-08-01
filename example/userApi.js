@@ -16,8 +16,8 @@ const userApi = {
         ...jsonHeaders,
       }).then((response) => response.json()),
 
-    show: (game, player) =>
-      fetch(`${ROOT_URL}/games/${game}/player/${player}`, {
+    show: (game, player, token) =>
+      fetch(`${ROOT_URL}/games/${game}/player/${player}/${token}`, {
         ...jsonHeaders,
       }).then((response) => response.json()),
 
@@ -35,21 +35,21 @@ const userApi = {
         }),
       }).then((response) => response.json()),
 
-    // player obj: player: {name: string, is_ai: boolean}
+    // player obj: {name: string, is_ai: boolean}
     newPlayer: (game, player) =>
       fetch(`${ROOT_URL}/games/${game}/new_player`, {
         ...postOpts,
         body: JSON.stringify({ player: player }),
       }).then((response) => response.json()),
 
-    start: (game, player) =>
-      fetch(`${ROOT_URL}/games/${game}/start/player/${player}`, {
+    start: (game, player, token) =>
+      fetch(`${ROOT_URL}/games/${game}/start/player/${player}/${token}`, {
         ...postOpts,
         body: JSON.stringify({}),
       }).then((response) => response.json()),
 
-    finish: (game, player) =>
-      fetch(`${ROOT_URL}/games/${game}/finish/player/${player}`, {
+    finish: (game, player, token) =>
+      fetch(`${ROOT_URL}/games/${game}/finish/player/${player}/${token}`, {
         ...postOpts,
         body: JSON.stringify({}),
       }).then((response) => response.json()),

@@ -1,4 +1,4 @@
-json = @games.each do |game|
+json = @games.map do |game|
   {
     id: game.id,
     name: game.name,
