@@ -79,8 +79,8 @@ class GamesController < ApplicationController
   end
 
   def check_authorization
-    game = Game.find(params[:game_id])
-    player = Player.find(params[:player])
+    game = game_from_id
+    player = Player.find(params[:player_id])
     player.in?(game.players) && player.valid_token?(request.headers['Authorization'])
   end
 end
