@@ -10,7 +10,7 @@ An example of an API libarary using JavaScript `fetch` calls is available at `/s
 ## AI player
 If deploying with a frontend, it might be desirable to uncomment line 15 of `app/models/player.rb` to add a 2.5 second latency to ai player moves. On the current deploy, AI players move instantly.
 
-# Routes, Requests, and Responses
+## Routes, Requests, and Responses
 There are two primary controllers for `craziest-eights`, `games` and `players`.
 
 All authenticated routes require an `auth_token` as the final parameter in the URL. This token is automatically generated when a new player is created. It is only returned once, in the responses to `post /games` and `post /games/:game_id/new_player`, and must be saved by the user or client. For SPAs and other clients, a good option is to keep it in the browser's `localStorage` along with `player_id` and `game_id`.
@@ -20,6 +20,7 @@ The lack of a more secure authorization process is deliberate: these are throwaw
 All games that have not been interacted with for over 6 hours are wiped from the server at midnight (0:00) UTC.
 
 ###Games
+
 `get '/games'`: Index all pending games.
   * example response:
   ```json
@@ -49,7 +50,8 @@ All games that have not been interacted with for over 6 hours are wiped from the
   * example request body:
 `delete '/games/:game_id/player/:player_id/:token'`: Destroy game if state is not `'active'`. Authenticated route.
 
-##Players
+###Players
+
 `get '/players/:player_id/:token'`: Show all player information. 
   * response:
 `post '/players/:id/draw/:token'`, to: 'players#draw'
