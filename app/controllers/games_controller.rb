@@ -50,11 +50,11 @@ class GamesController < ApplicationController
   end
 
   def destroy
-    if game_from_id
+    if game_from_id&.state != 'active'
       Game.destroy(params[:game_id])
       render json: { message: "game #{params[:id]} deleted" }
     else
-      render json: { error: "no game with id #{params[:id]}" }
+      render json: { error: "no destroyable game with id: #{params[:id]}" }
     end
   end
 
