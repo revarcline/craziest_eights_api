@@ -67,6 +67,10 @@ class Game < ApplicationRecord
     true
   end
 
+  def self.pending_deletion
+    where('updated_at < ?', 6.hours.ago)
+  end
+
   private
 
   def deal

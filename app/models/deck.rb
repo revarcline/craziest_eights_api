@@ -5,6 +5,10 @@ class Deck < ApplicationRecord
 
   after_create :build_deck
 
+  def self.pending_deletion
+    where('updated_at < ?', 6.hours.ago)
+  end
+
   private
 
   def build_deck

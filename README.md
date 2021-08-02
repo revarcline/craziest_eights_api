@@ -58,7 +58,11 @@ In the `complete` state, the game no longer has a deck, and the winner ID is dis
 `get '/games/:game_id/player/:player_id/:token'`: Show game details. Authenticated route.
   * example responses for pending, active, and complete games:
 ```json
-{"id":272,"name":"Pending Game","state":"pending","created_at":"2021-08-02T02:15:42.343Z","updated_at":"2021-08-02T02:15:42.343Z","players":[{"id":288,"name":"alex","is_ai":false,"hand_size":0}]}
+{
+  "id": 272,
+  "name": "Pending Game",
+  "state": "pending",
+  "created_at": "2021-08-02T02:15:42.343Z","updated_at":"2021-08-02T02:15:42.343Z","players":[{"id":288,"name":"alex","is_ai":false,"hand_size":0}]}
 ```
 
 ```json
@@ -116,7 +120,10 @@ In the `complete` state, the game no longer has a deck, and the winner ID is dis
 }
 ```
   * example response:
+```json
+{"id":2,"name":"test","state":"active","created_at":"2021-08-02T03:48:31.017Z","updated_at":"2021-08-02T03:50:07.017Z","turn":0,"current_player":2,"stock_count":41,"discard_count":1,"open_card":{"id":20,"suit":"D","rank":"8"},"players":[{"id":2,"name":"alex","is_ai":false,"hand_size":5},{"id":3,"name":"robot","is_ai":true,"hand_size":5}]}
 
+```
 
 `post '/games/:game_id/start/player/:player_id/:token'`: Set game to `'active'` and deal cards. Authenticated route.
   * example request body: `{}`
