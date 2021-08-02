@@ -83,4 +83,4 @@ production:
   <<: *default
   database: craziest_eights_production
   username: craziest_eights
-  password: <%= ENV['CRAZIEST_EIGHTS_API_DATABASE_PASSWORD'] %>
+  password: <%= ENV['CRAZIEST_EIGHTS_DATABASE_PASSWORD'] %>
