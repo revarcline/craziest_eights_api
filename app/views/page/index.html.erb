@@ -12,10 +12,10 @@
 <li>If there are no matches in the player's hand, they can draw from the stock until a match is found.</li>
 <li>Play continues until a player plays their enire hand, at which point they win.</li>
 </ul>
-<h2 id="example-deploy">Source Code</h2>
+<h2 id="source-code">Source Code</h2>
 <p>The app's source code is available <a href="https://github.com/revarcline/craziest_eights_api">on github</a>. Because tokens are used in the URL, deploying with SSL is highly recommended.</p>
 <h2 id="sample-api-library">Sample API library</h2>
-<p>An example of an API libarary using JavaScript <code>fetch</code> calls is available in the repo at <code>/sample/userApi.js</code>. It is currently pointing to the example deployment at <code>https://craziest-eights.herokuapp.com</code> but the <code>API_ROOT</code> constant can be changed for local usage.</p>
+<p>An example of an API libarary using JavaScript <code>fetch</code> calls is available in the repo at <code>/example/userApi.js</code>. It is currently pointing to the example deployment at <code>https://craziest-eights.herokuapp.com</code> but the <code>API_ROOT</code> constant can be changed for local usage.</p>
 <h2 id="ai-player">AI player</h2>
 <p>If deploying with a frontend, it might be desirable to uncomment line 15 of <code>app/models/player.rb</code> to add a 2.5 second latency to ai player moves. On the current deploy, AI players move instantly.</p>
 <h2 id="routes-requests-and-responses">Routes, Requests, and Responses</h2>
