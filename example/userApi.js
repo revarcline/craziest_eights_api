@@ -1,4 +1,4 @@
-const ROOT_URL = "http://localhost:3000";
+const ROOT_URL = "http://craziest-eights.herokuapp.com/";
 
 const jsonHeaders = {
   headers: {
@@ -35,7 +35,7 @@ const userApi = {
         }),
       }).then((response) => response.json()),
 
-    // player obj: {name: string, is_ai: boolean}
+    // player object: {name: string, is_ai: boolean}
     newPlayer: (game, player) =>
       fetch(`${ROOT_URL}/games/${game}/new_player`, {
         ...postOpts,
@@ -89,12 +89,14 @@ const saveToLocalStorage = (gameInfo) => {
   localStorage.setItem("authToken", gameInfo.player.auth_token);
 };
 
+// create a new game and store info to localStorage
 const newGame = (gameName, playerName) => {
   userApi.game
     .create(gameName, playerName)
     .then((gameInfo) => saveToLocalStorage(gameInfo));
 };
 
+// add a new human player and store info to localStorage
 const joinGame = (gameId, playerName) => {
   userApi.game
     .newPlayer(gameId, { name: playerName, is_ai: false })
@@ -121,8 +123,8 @@ export { saveToLocalStorage, newGame, joinGame, addAIPlayer, deleteGame };
 /*
  
  helpful little bit of code for loading vars from localStorage in console
- const gameId = localStorage.getItem("gameId");
- const playerId = localStorage.getItem("playerId");
- const authToken = localStorage.getItem("authToken");
+ let gameId = localStorage.getItem("gameId");
+ let playerId = localStorage.getItem("playerId");
+ let authToken = localStorage.getItem("authToken");
 
 */

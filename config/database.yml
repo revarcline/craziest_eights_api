@@ -81,6 +81,6 @@ test:
 #
 production:
   <<: *default
-  database: craziest_eights_api_production
-  username: craziest_eights_api
+  database: craziest_eights_production
+  username: craziest_eights
   password: <%= ENV['CRAZIEST_EIGHTS_API_DATABASE_PASSWORD'] %>

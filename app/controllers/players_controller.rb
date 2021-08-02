@@ -1,5 +1,5 @@
 class PlayersController < ApplicationController
-  before_action :check_authorization
+  before_action :check_authorization, :check_if_game_active
 
   def show
     @player = player_from_id
@@ -36,5 +36,12 @@ class PlayersController < ApplicationController
     return if player.auth_token == params[:token]
 
     render json: { error: 'must use correct authorization token for player' }
+  end
+
+  def check_if_game_active
+    player = player_from_id
+    return if player.game.state == 'active'
+
+    render json: { error: 'game must be active' }
   end
 end

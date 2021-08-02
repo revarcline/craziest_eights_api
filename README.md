@@ -31,6 +31,15 @@ The lack of a more secure authorization process is *deliberate*: these are throw
 All games that have not been interacted with for over 6 hours are wiped from the server at midnight (0:00) UTC with the rake task `clear_idle`.
 
 ### Games
+
+Games have three states: `pending`, `active`, and `complete`.
+
+Players can only be added to a game during the `pending` state, up to a maximum of 8. The `pending` state is intended for creating a multiplayer lobby if used with a frontend. The game can be cancelled with the delete action. Only `pending` games can be seen in the index.
+
+In the `active` state, the game tracks the number of turns and which player's turn is currently pending. When a game is set to `active`, the deck is created and cards are dealt to each player. If the discard pile empties, the server will automatically reshuffle it, move its contents to the stock, and move the top card to the discard pile. Active games remain so until a winner is determined or a client deliberately ends the game.
+
+In the `complete` state, the game no longer has a deck, and the winner ID is displayed. The game can now be safely deleted.
+
 `get '/games'`: Index all pending games.
   * example response:
 ```json
@@ -49,7 +58,7 @@ All games that have not been interacted with for over 6 hours are wiped from the
 `get '/games/:game_id/player/:player_id/:token'`: Show game details. Authenticated route.
   * example responses for pending, active, and complete games:
 ```json
-{"id":272,"name":"testing win","state":"pending","created_at":"2021-08-02T02:15:42.343Z","updated_at":"2021-08-02T02:15:42.343Z","players":[{"id":288,"name":"alex","is_ai":false,"hand_size":0}]}
+{"id":272,"name":"Pending Game","state":"pending","created_at":"2021-08-02T02:15:42.343Z","updated_at":"2021-08-02T02:15:42.343Z","players":[{"id":288,"name":"alex","is_ai":false,"hand_size":0}]}
 ```
 
 ```json
@@ -80,8 +89,15 @@ All games that have not been interacted with for over 6 hours are wiped from the
 `post '/games'`: Create new game and player.
   * example request body:
 ```json
-{"game":{"name":"testing win"},"player":{"name":"alex","is_ai":false}}
-
+{
+  "game": {
+    "name": "testing win"
+  },
+  "player": {
+    "name": "alex",
+    "is_ai": false
+  }
+}
 ```
   * example response:
 ```json
@@ -90,11 +106,26 @@ All games that have not been interacted with for over 6 hours are wiped from the
 ```
 
 `post '/games/:game_id/new_player'`: Create new player for game if game state is `'pending'`. If `is_ai` is set to true, the response will not contain an `auth_token`, as the player will play automatically.
-  * example request body:
+  * example request body: 
+```json
+{
+  "player": {
+    "name": "robot",
+    "is_ai": true
+  }
+}
+```
+  * example response:
+
+
 `post '/games/:game_id/start/player/:player_id/:token'`: Set game to `'active'` and deal cards. Authenticated route.
-  * example request body:
+  * example request body: `{}`
+  * example response: same as `active` example from `get '/games/:game_id/player/:player_id/:token'`
+
 `post '/games/:game_id/finish/player/:player_id/:token'`: Set game to `'complete'`, whether or not a winner exists. Authenticated route.
-  * example request body:
+  * example request body: `{}`
+  * example response: same as `completed` example from `get '/games/:game_id/player/:player_id/:token'`
+
 `delete '/games/:game_id/player/:player_id/:token'`: Destroy game if state is not `'active'`. Authenticated route.
   * response: `{ "message": "game 273 deleted" }`
 
