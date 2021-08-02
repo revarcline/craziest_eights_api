@@ -9,7 +9,7 @@ class PlayersController < ApplicationController
   def play
     @player = player_from_id
     card = Card.find(params[:card])
-    if player.play_card(card)
+    if @player.play_card(card)
       render 'show'
     else
       render json: { error: 'must make a valid move' }
@@ -18,8 +18,8 @@ class PlayersController < ApplicationController
 
   def draw
     @player = player_from_id
-    if player.draw_from_stock.instance_of?(Card)
-      render json: 'show'
+    if @player.draw_from_stock.instance_of?(Card)
+      render 'show'
     else
       render json: { error: 'could not draw card' }
     end
@@ -33,6 +33,8 @@ class PlayersController < ApplicationController
 
   def check_authorization
     player = player_from_id
-    player.valid_token?(request.headers['Authorization'])
+    return if player.auth_token == params[:token]
+
+    render json: { error: 'must use correct authorization token for player' }
   end
 end

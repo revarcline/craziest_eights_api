@@ -1,4 +1,16 @@
-# Crazy Eights API
+# Crazest Eights API
+
+`craziest-eights` is a Rails API simulating a game of Crazy Eights with human and/or AI players.
+
+## Rules of Play
+* A game is created, along with the first player.
+* Players can join or AI players can be added (up to 8 players total) until play starts.
+* Players are dealt five cards, and play in order of joining.
+* One card is removed from the stock pile and placed facing up, starting the discard pile.
+* On a player's turn, they can play any card in their hand that matches either the suit or the rank of the open card on the discard pile. 8s are wild.
+* When an 8 is played, the next player must match its suit or play another 8.
+* If there are no matches in the player's hand, they can draw from the stock until a match is found.
+* Play continues until a player plays their enire hand, at which point they win.
 
 ## Example Deploy
 An example deployment is available [here](https://craziest-eights.herokuapp.com). Because tokens are used in the URL, deploying with SSL is highly recommended.
@@ -53,6 +65,26 @@ All games that have not been interacted with for over 6 hours are wiped from the
 ### Players
 `get '/players/:player_id/:token'`: Show all player information. 
   * response:
+```json
+{
+"id":281,
+"name":"Alex",
+"my_turn":true,
+"won":false,
+"created_at":"2021-08-02T01:09:44.001Z",
+"updated_at":"2021-08-02T01:09:44.001Z",
+"hand":
+  [
+    {
+      "id":400,
+      "suit":"C",
+      "rank":"J"
+    }
+    ...
+  ]
+}
+```
+
 `post '/players/:id/draw/:token'`, to: 'players#draw'
   * request body: {}
 `post '/players/:id/play/:token'`, to: 'players#play'

@@ -76,6 +76,8 @@ class GamesController < ApplicationController
   def check_authorization
     game = game_from_id
     player = Player.find(params[:player_id])
-    player.in?(game.players) && player.valid_token?(params[:auth_token])
+    return if player.in?(game.players) && player.auth_token == params[:token]
+
+    render json: { error: 'must use correct authorization for player in game' }
   end
 end

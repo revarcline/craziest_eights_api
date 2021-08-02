@@ -7,7 +7,7 @@ json = {
   updated_at: @player.updated_at
 }
 
-json[:hand] = @player.hand do |card|
+json[:hand] = @player.hand.map do |card|
   {
     id: card.id,
     suit: card.suit,
