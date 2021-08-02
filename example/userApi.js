@@ -21,12 +21,12 @@ const userApi = {
         ...jsonHeaders,
       }).then((response) => response.json()),
 
-    create: (name, playerName) =>
+    create: (gameName, playerName) =>
       fetch(`${ROOT_URL}/games`, {
         ...postOpts,
         body: JSON.stringify({
           game: {
-            name: name,
+            name: gameName,
           },
           player: {
             name: playerName,
@@ -54,27 +54,27 @@ const userApi = {
         body: JSON.stringify({}),
       }).then((response) => response.json()),
 
-    destroy: (game, player) =>
-      fetch(`${ROOT_URL}/games/${game}/player/${player}`, {
+    destroy: (game, player, token) =>
+      fetch(`${ROOT_URL}/games/${game}/player/${player}/${token}`, {
         ...jsonHeaders,
         method: "DELETE",
       }).then((response) => response.json()),
   },
 
   player: {
-    show: (player) =>
-      fetch(`${ROOT_URL}/players/${player}`, {
+    show: (player, token) =>
+      fetch(`${ROOT_URL}/players/${player}/${token}`, {
         ...jsonHeaders,
       }).then((response) => response.json()),
 
-    drawCard: (player) =>
-      fetch(`${ROOT_URL}/players/${player}/draw`, {
+    drawCard: (player, token) =>
+      fetch(`${ROOT_URL}/players/${player}/draw/${token}`, {
         ...postOpts,
         body: JSON.stringify({}),
       }).then((response) => response.json()),
 
-    playCard: (player, card) =>
-      fetch(`${ROOT_URL}/players/${player}/play`, {
+    playCard: (player, card, token) =>
+      fetch(`${ROOT_URL}/players/${player}/play/${token}`, {
         ...postOpts,
         body: JSON.stringify({ card: card }),
       }).then((response) => response.json()),
@@ -82,5 +82,29 @@ const userApi = {
 };
 
 // examples of keeping client details in localStorage on player join
+
+const saveToLocalStorage = (gameInfo) => {
+  localStorage.setItem("gameId", gameInfo.id);
+  localStorage.setItem("playerId", gameInfo.player.id);
+  localStorage.setItem("authToken", gameInfo.player.auth_token);
+};
+
+export const newGame = (gameName, playerName) => {
+  userApi.game
+    .create(gameName, playerName)
+    .then((gameInfo) => saveToLocalStorage(gameInfo));
+};
+
+export const joinGame = (gameId, playerName) => {
+  userApi.game
+    .newPlayer(gameId, { name: playerName, is_ai: false })
+    .then((gameInfo) => saveToLocalStorage(gameInfo));
+};
+
+// create an AI player
+export const addAIPlayer = (gameId, playerName) =>
+  userApi.game.newPlayer(gameId, { name: playerName, is_ai: true });
+
+// it's recommended to clear localStorage on the delete action.
 
 export default userApi;

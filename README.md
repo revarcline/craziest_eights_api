@@ -1,11 +1,10 @@
 # Crazy Eights API
 
 ## Example Deploy
-An example deployment is available [here](https://craziest-eights.buckar.ooo)
-
+An example deployment is available [here](https://craziest-eights.herokuapp.com). Because tokens are used in the URL, deploying with SSL is highly recommended.
 
 ## Sample API library
-An example of an API libarary using JavaScript `fetch` calls is available at `/sample/userApi.js`. It is currently pointing to the example deployment at `https://craziest-eights.buckar.ooo` but the `API_ROOT` constant can be changed for local usage.
+An example of an API libarary using JavaScript `fetch` calls is available at `/sample/userApi.js`. It is currently pointing to the example deployment at `https://craziest-eights.herokuapp.com` but the `API_ROOT` constant can be changed for local usage.
 
 ## AI player
 If deploying with a frontend, it might be desirable to uncomment line 15 of `app/models/player.rb` to add a 2.5 second latency to ai player moves. On the current deploy, AI players move instantly.
@@ -17,26 +16,28 @@ All authenticated routes require an `auth_token` as the final parameter in the U
 
 The lack of a more secure authorization process is deliberate: these are throwaway games and player objects.
 
-All games that have not been interacted with for over 6 hours are wiped from the server at midnight (0:00) UTC.
+All games that have not been interacted with for over 6 hours are wiped from the server at midnight (0:00) UTC with the rake task `clear_idle`.
 
 ### Games
 `get '/games'`: Index all pending games.
   * example response:
-  ```json
-  [
-    {
-      "id": "1",
-      "name": "A fun game",
-      "player_count": "1",
-      "created_at": "2021-08-01T23:12:49.416Z",
-      "updated_at": "2021-08-01T23:12:52.317Z"
-    },
-    ...
-  ]
-  ```
+```json
+[
+  {
+    "id": "1",
+    "name": "A fun game",
+    "player_count": "1",
+    "created_at": "2021-08-01T23:12:49.416Z",
+    "updated_at": "2021-08-01T23:12:52.317Z"
+  },
+  ...
+]
+```
 
 `get '/games/:game_id/player/:player_id/:token'`: Show game details. Authenticated route.
   * example response:
+    ```json
+    ```
 
 `post '/games'`: Create new game and player.
   * request body:
