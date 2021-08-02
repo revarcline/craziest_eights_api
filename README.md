@@ -40,6 +40,8 @@ In the `active` state, the game tracks the number of turns and which player's tu
 
 In the `complete` state, the game no longer has a deck, and the winner ID is displayed. The game can now be safely deleted.
 
+Cards are represented by the strings `rank` and `suit`. `rank`s are the numbers `2` through `10` and face cards are `J`, `Q`, `K`, and `A`. Suits are `C`lubs, `D`iamonds, `H`earts, and `S`pades. Each card in a game has a unique ID, and is sorted by its last update.
+
 `get '/games'`: Index all pending games.
   * example response:
 ```json
@@ -64,12 +66,38 @@ In the `complete` state, the game no longer has a deck, and the winner ID is dis
   "state": "pending",
   "created_at": "2021-08-02T02:15:42.343Z","updated_at":"2021-08-02T02:15:42.343Z","players":[{"id":288,"name":"alex","is_ai":false,"hand_size":0}]}
 ```
-
 ```json
-{"id":272,"name":"testing win","state":"active","created_at":"2021-08-02T02:15:42.343Z","updated_at":"2021-08-02T02:18:29.394Z","turn":0,"current_player":288,"stock_count":41,"discard_count":1,"open_card":{"id":432,"rank":"4","suit":"D","deck_id":9,"pile_id":33,"created_at":"2021-08-02T02:18:29.201Z","updated_at":"2021-08-02T02:18:29.332Z"},"players":[{"id":288,"name":"alex","is_ai":false,"hand_size":5},{"id":289,"name":"George","is_ai":true,"hand_size":5}]}
+{
+  "id": 272,
+  "name": "testing win",
+  "state": "active",
+  "created_at": "2021-08-02T02:15:42.343Z",
+  "updated_at": "2021-08-02T02:18:29.394Z",
+  "turn": 0,
+  "current_player": 288,
+  "stock_count": 41,
+  "discard_count": 1,
+  "open_card": {
+    "id": 432,
+    "rank": "4",
+    "suit": "D"
+  },
+  "players": [
+    {
+      "id": 288,
+      "name": "alex",
+      "is_ai": false,
+      "hand_size":5
+    },
+    {
+    "id": 289,
+    "name": "george",
+    "is_ai": true,
+    "hand_size": 5}
+  ]
+}
 
 ```
-
 ```json
 {
   "id": 272,
