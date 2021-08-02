@@ -77,7 +77,7 @@ In the `complete` state, the game no longer has a deck, and the winner ID is dis
 ```json
 {
   "id": 272,
-  "name": "testing win",
+  "name": "Active Game",
   "state": "active",
   "created_at": "2021-08-02T02:15:42.343Z",
   "updated_at": "2021-08-02T02:18:29.394Z",
