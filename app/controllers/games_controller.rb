@@ -7,14 +7,14 @@ class GamesController < ApplicationController
   end
 
   def show
-    render json: game_info
+    @game = game_from_id
+    render 'show'
   end
 
   def create
-    @game = Game.new(name: params[:game][:name])
-    if game.save
-      @player = game.add_player(params[:player][:name], params[:player][:is_ai])
-      render 'new_player'
+    if (@game = Game.create(name: params[:game][:name]) &&
+      @player = @game.add_player(params[:player][:name], params[:player][:is_ai]))
+      render 'new_player' if @player
     else
       render json: { error: 'could not create game' }
     end
@@ -32,7 +32,7 @@ class GamesController < ApplicationController
   def new_player
     # this might be tricky? we'll have to see
     @game = game_from_id
-    @player = game.add_player(params[:player][:name], params[:player][:is_ai])
+    @player = @game.add_player(params[:player][:name], params[:player][:is_ai])
     if @player
       render 'new_player'
     else

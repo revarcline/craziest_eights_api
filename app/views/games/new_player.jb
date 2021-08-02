@@ -3,12 +3,12 @@ json = {}
 json[:game] = {
   id: @game.id,
   name: @game.name,
-  status: @game.status,
+  state: @game.state,
   created_at: @game.created_at,
   updated_at: @game.updated_at
 }
 
-json[:game][:players] = @games.players.map do |player|
+json[:game][:players] = @game.players.map do |player|
   {
     id: player.id,
     name: player.name,

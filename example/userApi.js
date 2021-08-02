@@ -84,27 +84,28 @@ const userApi = {
 // examples of keeping client details in localStorage on player join
 
 const saveToLocalStorage = (gameInfo) => {
-  localStorage.setItem("gameId", gameInfo.id);
+  localStorage.setItem("gameId", gameInfo.game.id);
   localStorage.setItem("playerId", gameInfo.player.id);
   localStorage.setItem("authToken", gameInfo.player.auth_token);
 };
 
-export const newGame = (gameName, playerName) => {
+const newGame = (gameName, playerName) => {
   userApi.game
     .create(gameName, playerName)
     .then((gameInfo) => saveToLocalStorage(gameInfo));
 };
 
-export const joinGame = (gameId, playerName) => {
+const joinGame = (gameId, playerName) => {
   userApi.game
     .newPlayer(gameId, { name: playerName, is_ai: false })
     .then((gameInfo) => saveToLocalStorage(gameInfo));
 };
 
 // create an AI player
-export const addAIPlayer = (gameId, playerName) =>
+const addAIPlayer = (gameId, playerName) =>
   userApi.game.newPlayer(gameId, { name: playerName, is_ai: true });
 
 // it's recommended to clear localStorage on the delete action.
 
 export default userApi;
+export { saveToLocalStorage, newGame, joinGame, addAIPlayer };
