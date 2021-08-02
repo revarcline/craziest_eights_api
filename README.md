@@ -4,7 +4,7 @@
 
 ## Rules of Play
 * A game is created, along with the first player.
-* Players can join or AI players can be added (up to 8 players total) until play starts.
+* Players can join or AI players can be added (2-8 players total) until play starts.
 * Players are dealt five cards, and play in order of joining.
 * One card is removed from the stock pile and placed facing up, starting the discard pile.
 * On a player's turn, they can play any card in their hand that matches either the suit or the rank of the open card on the discard pile. 8s are wild.
@@ -239,4 +239,4 @@ Cards are represented by the strings `rank` and `suit`. `rank`s are the numbers 
 ```
 
 # Copyright
-`craziest-eights` is available under the GPL 3.0.
+`craziest-eights` is available under the [GPL 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html).
