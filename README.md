@@ -218,12 +218,12 @@ Cards are represented by the strings `rank` and `suit`. `rank`s are the numbers 
 }
 ```
 
-`post '/players/:id/draw/:token'`, to: 'players#draw'
-  * example request body: `{"card": "276"}`
+`post '/players/:id/draw/:token'`: Draw a card from the stock pile.
+  * example request body: `{}`
   * example response: same as `get 'players/:player_id/:token'`
 
-`post '/players/:id/play/:token'`, to: 'players#play'
-  * example request body: `{}`
+`post '/players/:id/play/:token'`: Play a card (by card id) on the discard pile. Only valid moves are accepted.
+  * example request body: `{"card": "276"}`
   * response: same as `get 'players/:player_id/:token'` unless playing the winning move, which will return:
 ```json
 {

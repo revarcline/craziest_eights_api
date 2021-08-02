@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css">
-<h1 id="crazest-eights-api">Crazest Eights API</h1>
+<h1 id="crazest-eights-api">Craziest Eights API</h1>
 <p><code>craziest-eights</code> is a Rails API simulating a game of Crazy Eights with human and/or AI players by <a href="https://buckar.ooo">alex cline</a>.</p>
 <h2 id="rules-of-play">Rules of Play</h2>
 <ul>
@@ -198,14 +198,14 @@
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="er">...</span></span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
-<p><code>post '/players/:id/draw/:token'</code>, to: 'players#draw'</p>
+<p><code>post '/players/:id/draw/:token'</code>: Draw a card from the stock pile.</p>
 <ul>
 <li>example request body: <code>{"card": "276"}</code></li>
 <li>example response: same as <code>get 'players/:player_id/:token'</code></li>
 </ul>
-<p><code>post '/players/:id/play/:token'</code>, to: 'players#play'</p>
+<p><code>post '/players/:id/play/:token'</code>: Play a card (by card id) on the discard pile. Only valid moves are accepted.</p>
 <ul>
-<li>example request body: <code>{}</code></li>
+<li>example request body: <code>{"card": 289}</code></li>
 <li>response: same as <code>get 'players/:player_id/:token'</code> unless playing the winning move, which will return:</li>
 </ul>
 <div class="sourceCode" id="cb9"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
