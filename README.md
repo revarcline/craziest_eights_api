@@ -40,8 +40,6 @@ In the `active` state, the game tracks the number of turns and which player's tu
 
 In the `complete` state, the game no longer has a deck, and the winner ID is displayed. The game can now be safely deleted.
 
-Cards are represented by the strings `rank` and `suit`. `rank`s are the numbers `2` through `10` and face cards are `J`, `Q`, `K`, and `A`. Suits are `C`lubs, `D`iamonds, `H`earts, and `S`pades. Each card in a game has a unique ID, and is sorted by its last update.
-
 `get '/games'`: Index all pending games.
   * example response:
 ```json
@@ -64,7 +62,17 @@ Cards are represented by the strings `rank` and `suit`. `rank`s are the numbers 
   "id": 272,
   "name": "Pending Game",
   "state": "pending",
-  "created_at": "2021-08-02T02:15:42.343Z","updated_at":"2021-08-02T02:15:42.343Z","players":[{"id":288,"name":"alex","is_ai":false,"hand_size":0}]}
+  "created_at": "2021-08-02T02:15:42.343Z",
+  "updated_at": "2021-08-02T02:15:42.343Z",
+  "players": [
+    {
+      "id": 288,
+      "name": "alex",
+      "is_ai": false,
+      "hand_size": 0
+    }
+  ]
+}
 ```
 ```json
 {
@@ -133,8 +141,31 @@ Cards are represented by the strings `rank` and `suit`. `rank`s are the numbers 
 ```
   * example response:
 ```json
-{"game":{"id":272,"name":"testing win","state":"pending","created_at":"2021-08-02T02:15:42.343Z","updated_at":"2021-08-02T02:15:42.343Z","players":[{"id":288,"name":"alex","is_ai":false,"hand_size":0}]},"player":{"id":288,"name":"alex","is_ai":false,"created_at":"2021-08-02T02:15:42.347Z","updated_at":"2021-08-02T02:15:42.347Z","auth_token":"xfPXKuyvNU5hqRShxU6usKFM"}}
-
+{
+  "game": {
+    "id": 272,
+    "name": "testing win",
+    "state": "pending",
+    "created_at": "2021-08-02T02:15:42.343Z",
+    "updated_at": "2021-08-02T02:15:42.343Z",
+    "players": [
+      {
+        "id": 288,
+        "name": "alex",
+        "is_ai": false,
+        "hand_size": 0
+      }
+    ]
+  },
+  "player": {
+    "id": 288,
+    "name": "alex",
+    "is_ai": false,
+    "created_at": "2021-08-02T02:15:42.347Z",
+    "updated_at": "2021-08-02T02:15:42.347Z",
+    "auth_token":"xfPXKuyvNU5hqRShxU6usKFM"
+  }
+}
 ```
 
 `post '/games/:game_id/new_player'`: Create new player for game if game state is `'pending'`. If `is_ai` is set to true, the response will not contain an `auth_token`, as the player will play automatically.
@@ -147,11 +178,7 @@ Cards are represented by the strings `rank` and `suit`. `rank`s are the numbers 
   }
 }
 ```
-  * example response:
-```json
-{"id":2,"name":"test","state":"active","created_at":"2021-08-02T03:48:31.017Z","updated_at":"2021-08-02T03:50:07.017Z","turn":0,"current_player":2,"stock_count":41,"discard_count":1,"open_card":{"id":20,"suit":"D","rank":"8"},"players":[{"id":2,"name":"alex","is_ai":false,"hand_size":5},{"id":3,"name":"robot","is_ai":true,"hand_size":5}]}
-
-```
+  * example response: same as `post '/games'`
 
 `post '/games/:game_id/start/player/:player_id/:token'`: Set game to `'active'` and deal cards. Authenticated route.
   * example request body: `{}`
@@ -167,6 +194,8 @@ Cards are represented by the strings `rank` and `suit`. `rank`s are the numbers 
 ### Players
 
 All Player routes require authentication, and are **only available during active games**. These routes rely on the existence of a deck, which is created at game start and is destroyed when the game ends.
+
+Cards are represented by the strings `rank` and `suit`. `rank`s are the numbers `2` through `10` and face cards are `J`, `Q`, `K`, and `A`. Suits are `C`lubs, `D`iamonds, `H`earts, and `S`pades. Each card in a game has a unique ID, and is sorted by its last update.
 
 `get '/players/:player_id/:token'`: Show all player information. 
   * example response:
