@@ -237,3 +237,6 @@ Cards are represented by the strings `rank` and `suit`. `rank`s are the numbers 
 }
 
 ```
+
+# Copyright
+`craziest-eights` is available under the GPL 3.0.
