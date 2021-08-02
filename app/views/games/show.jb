@@ -12,7 +12,11 @@ when 'active'
   json[:current_player] = @game.turn_player_id
   json[:stock_count] = @game.stock.cards.count
   json[:discard_count] = @game.discard.cards.count
-  json[:open_card] = @game.open_card
+  json[:open_card] = {
+    id: @game.open_card.id,
+    suit: @game.open_card.suit,
+    rank: @game.open_card.rank
+  }
 when 'complete'
   json[:winner] = @game.winner
 end

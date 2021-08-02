@@ -106,9 +106,17 @@ const addAIPlayer = (gameId, playerName) =>
   userApi.game.newPlayer(gameId, { name: playerName, is_ai: true });
 
 // it's recommended to clear localStorage on the delete action.
+const deleteGame = () =>
+  userApi.game
+    .destroy(
+      localStorage.getItem("gameId"),
+      localStorage.getItem("playerId"),
+      localStorage.getItem("authToken"),
+    )
+    .then(() => localStorage.clear());
 
 export default userApi;
-export { saveToLocalStorage, newGame, joinGame, addAIPlayer };
+export { saveToLocalStorage, newGame, joinGame, addAIPlayer, deleteGame };
 
 /*
  

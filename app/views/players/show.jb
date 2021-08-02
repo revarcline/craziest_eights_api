@@ -16,3 +16,5 @@ json[:hand] = @player.hand.map do |card|
 end
 
 json
+
+
