@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   post '/games/:game_id/start/player/:player_id/:token', to: 'games#start'
   post '/games/:game_id/finish/player/:player_id/:token', to: 'games#finish'
   delete '/games/:game_id/player/:player_id/:token', to: 'games#destroy'
-  get '/players/:player_id/:token', to: 'players#show'
+  get '/players/:id/:token', to: 'players#show'
   post '/players/:id/draw/:token', to: 'players#draw'
   post '/players/:id/play/:token', to: 'players#play'
 end

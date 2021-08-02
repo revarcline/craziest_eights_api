@@ -109,3 +109,12 @@ const addAIPlayer = (gameId, playerName) =>
 
 export default userApi;
 export { saveToLocalStorage, newGame, joinGame, addAIPlayer };
+
+/*
+ 
+ helpful little bit of code for loading vars from localStorage in console
+ const gameId = localStorage.getItem("gameId");
+ const playerId = localStorage.getItem("playerId");
+ const authToken = localStorage.getItem("authToken");
+
+*/

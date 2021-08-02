@@ -6,6 +6,17 @@ json = {
   updated_at: @game.updated_at
 }
 
+case @game.state
+when 'active'
+  json[:turn] = @game.turn
+  json[:current_player] = @game.turn_player_id
+  json[:stock_count] = @game.stock.cards.count
+  json[:discard_count] = @game.discard.cards.count
+  json[:open_card] = @game.open_card
+when 'complete'
+  json[:winner] = @game.winner
+end
+
 json[:players] = @game.players.map do |player|
   {
     id: player.id,
@@ -13,15 +24,6 @@ json[:players] = @game.players.map do |player|
     is_ai: player.is_ai,
     hand_size: player.hand_size
   }
-end
-
-case @game.state
-when 'active'
-  json[:open_card] = @game.open_card
-  json[:stock_count] = @game.stock.count
-  json[:discard_count] = @game.discard.count
-when 'complete'
-  json[:winner] = @game.winner
 end
 
 json

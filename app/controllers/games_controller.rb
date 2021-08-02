@@ -12,17 +12,14 @@ class GamesController < ApplicationController
   end
 
   def create
-    if (@game = Game.create(name: params[:game][:name]) &&
-      @player = @game.add_player(params[:player][:name], params[:player][:is_ai]))
-      render 'new_player' if @player
-    else
-      render json: { error: 'could not create game' }
-    end
+    @game = Game.create(name: params[:game][:name])
+    @player = @game.add_player(params[:player][:name], params[:player][:is_ai])
+    render 'new_player' if @player
   end
 
   def start
-    game = game_from_id
-    if game.start_game
+    @game = game_from_id
+    if @game.start_game
       render 'show'
     else
       render json: { error: 'cannot start game' }
