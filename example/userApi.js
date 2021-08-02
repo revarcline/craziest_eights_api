@@ -1,5 +1,12 @@
+/* This is a sample javascript api interface for craziest-eights.
+ * Everything exported from this file can be called with async () => await
+ * syntax, or can be used for testing from the console without the exports. */
+
+// set root url here, currently pointed to example deploy.
+// it's currently on free heroku dynos so may take a second to spin up.
 const ROOT_URL = "http://craziest-eights.herokuapp.com/";
 
+// basic headers
 const jsonHeaders = {
   headers: {
     Accept: "application/json",
@@ -7,8 +14,11 @@ const jsonHeaders = {
   },
 };
 
+// post method
 const postOpts = { ...jsonHeaders, method: "POST" };
 
+// all API calls come from this object.
+// (e.g. userApi.game.create("game", "player"))
 const userApi = {
   game: {
     index: () =>
@@ -81,8 +91,9 @@ const userApi = {
   },
 };
 
-// examples of keeping client details in localStorage on player join
+/* examples of keeping client details in localStorage on player join */
 
+// helper method
 const saveToLocalStorage = (gameInfo) => {
   localStorage.setItem("gameId", gameInfo.game.id);
   localStorage.setItem("playerId", gameInfo.player.id);
@@ -108,6 +119,7 @@ const addAIPlayer = (gameId, playerName) =>
   userApi.game.newPlayer(gameId, { name: playerName, is_ai: true });
 
 // it's recommended to clear localStorage on the delete action.
+// even if the delete gives a 404, each client should run it on game close.
 const deleteGame = () =>
   userApi.game
     .destroy(
@@ -120,9 +132,8 @@ const deleteGame = () =>
 export default userApi;
 export { saveToLocalStorage, newGame, joinGame, addAIPlayer, deleteGame };
 
-/*
+/* helpful little bit of code for loading vars from localStorage in console
  
- helpful little bit of code for loading vars from localStorage in console
  let gameId = localStorage.getItem("gameId");
  let playerId = localStorage.getItem("playerId");
  let authToken = localStorage.getItem("authToken");
